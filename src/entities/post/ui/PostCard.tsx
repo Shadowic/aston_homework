@@ -11,23 +11,10 @@ interface PostCardProps {
 
 export const PostCard = ({ post }: PostCardProps) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        border: "1px solid #ccc",
-        padding: "16px",
-        borderRadius: "8px",
-        color: "#fafafa",
-      }}
-    >
+    <div className="post-card">
       <h3>{post.title}</h3>
       <p>{post.body}</p>
-      <small
-        style={{
-          marginTop: "auto",
-        }}
-      >
+      <small>
         User ID: {post.userId} | Post ID: {post.id}
       </small>
     </div>

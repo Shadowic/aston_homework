@@ -1,10 +1,25 @@
-const Header = () => {
+import { ThemeSwitcher } from '../../features/ThemeSwitcher/ui/ThemeSwitcher';
+import { Button } from '../../shared/ui/Button';
+
+interface HeaderProps {
+  onAboutClick: () => void;
+}
+
+const Header = ({ onAboutClick }: HeaderProps) => {
   return (
-    <header
-      style={{ background: "#fafafa", padding: "20px", textAlign: "center" }}
-    >
-      <h1 style={{ fontSize: "1rem", color: "#3b3b3b" }}>Хедер</h1>
-    </header>
+      <header className="header">
+        <h1 className="header-title">Хедер</h1>
+        <div className="header-btns">
+          <ThemeSwitcher />
+          <Button
+              onClick={onAboutClick}
+              variant="outline"
+              size="small"
+          >
+            О проекте
+          </Button>
+        </div>
+      </header>
   );
 };
 
