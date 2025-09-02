@@ -1,9 +1,10 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import styles from "./Button.module.css"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
-    variant?: 'primary' | 'secondary' | 'outline';
-    size?: 'small' | 'medium' | 'large';
+    variant?: 'Primary' | 'Secondary' | 'Outline';
+    size?: 'Small' | 'Medium' | 'Large';
 }
 
 export const Button = ({
@@ -13,7 +14,7 @@ export const Button = ({
                            className = '',
                            ...props
                        }: ButtonProps) => {
-    const baseClasses = `btn btn-${variant} btn-${size}`;
+    const baseClasses = `btn btn${variant} btn${size}`;
     const combinedClasses = `${baseClasses} ${className}`;
 
     return (

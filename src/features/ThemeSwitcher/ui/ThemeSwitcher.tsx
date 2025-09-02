@@ -1,4 +1,5 @@
 import { useTheme } from '../../../shared/lib/theme';
+import styles from "./ThemeSwitcher.module.css"
 
 export const ThemeSwitcher = () => {
     const { theme, toggleTheme } = useTheme();
@@ -6,7 +7,7 @@ export const ThemeSwitcher = () => {
     return (
         <button
             onClick={toggleTheme}
-            className="theme-switcher"
+            className={styles.themeSwitcher}
             aria-label="Переключить тему"
         >
             {theme === 'light' ? '🌙' : '☀️'}

@@ -1,5 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import styles from "./Modal.module.css"
 
 interface ModalProps {
     isOpen: boolean;
@@ -40,11 +41,11 @@ export const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
     if (!isOpen) return null;
 
     return createPortal(
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-                {title && <h3 className="modal-title">{title}</h3>}
+        <div className={styles.modalOverlay} onClick={onClose}>
+            <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+                {title && <h3 className={styles.modalTitle}>{title}</h3>}
                 <button
-                    className="modal-close"
+                    className={styles.modalClose}
                     onClick={onClose}
                     aria-label="Закрыть модальное окно"
                 >

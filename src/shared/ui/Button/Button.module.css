@@ -1,0 +1,84 @@
+button {
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+button:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btnPrimary {
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+}
+
+.btnPrimary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btnSecondary {
+    background-color: #6c757d;
+    color: white;
+    border: 1px solid #6c757d;
+}
+
+.btnSecondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.btnOutline {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btnOutline:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btnSmall {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btnLarge {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+@media (max-width: 768px) {
+    .btn {
+        padding: 0.6em 1.2em;
+    }
+}

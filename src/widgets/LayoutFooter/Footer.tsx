@@ -1,7 +1,9 @@
+import styles from "./Footer.module.css"
+
 const Footer = () => {
   return (
-    <footer className="footer">
-      <p>Футер</p>
+    <footer className={styles.footer}>
+      <p className={styles.title}>Футер</p>
     </footer>
   );
 };
