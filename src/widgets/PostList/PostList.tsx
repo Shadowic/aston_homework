@@ -1,18 +1,12 @@
 import { PostCard } from "../../entities/post/ui/PostCard";
-import { mockPosts } from "../../shared/config/posts";
+import { mockPosts } from "../../shared/mocks/posts";
+import styles from './PostList.module.css';
 
 export const PostList = () => {
   return (
-    <div className="container">
-      <h2 style={{ color: "#fafafa" }}>Список постов</h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "1rem",
-          marginTop: "2rem",
-        }}
-      >
+    <div>
+      <h2 className={styles.title}>Список постов</h2>
+      <div className={styles.posts}>
         {mockPosts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
