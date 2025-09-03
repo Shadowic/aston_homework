@@ -1,19 +1,18 @@
+import { useModal } from '../../shared/lib/context/ModalContext';
 import { ThemeSwitcher } from '../../features/ThemeSwitcher/ui/ThemeSwitcher';
 import { Button } from '../../shared/ui/Button';
-import styles from "./Header.module.css"
+import styles from "./Header.module.css";
 
-interface HeaderProps {
-  onAboutClick: () => void;
-}
+const Header = () => {
+    const { openModal } = useModal();
 
-const Header = ({ onAboutClick }: HeaderProps) => {
-  return (
+    return (
       <header className={styles.header}>
         <h1 className={styles.title}>Хедер</h1>
         <div className={styles.btns}>
           <ThemeSwitcher />
           <Button
-              onClick={onAboutClick}
+              onClick={openModal}
               variant="Outline"
               size="Small"
           >
@@ -21,6 +20,6 @@ const Header = ({ onAboutClick }: HeaderProps) => {
           </Button>
         </div>
       </header>
-  )};
+    )};
 
 export default Header;
