@@ -11,25 +11,23 @@
     animation: slideIn 0.4s ease;
 }
 
-.card h3 {
+.title {
     color: var(--card-text);
     margin: 0 0 1rem 0;
     font-size: 1.25rem;
     line-height: 1.4;
 }
 
-.card p {
+.text {
     color: var(--card-text);
     opacity: 0.9;
     line-height: 1.6;
     margin: 0 0 1rem 0;
-    flex-grow: 1;
 }
 
-.card small {
+.caption {
     color: var(--card-text);
     opacity: 0.7;
     margin-top: auto;
     font-size: 0.875rem;
-    margin-top: auto;
 }
