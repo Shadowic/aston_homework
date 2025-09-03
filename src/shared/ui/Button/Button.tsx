@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import styles from "./Button.module.css"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,18 +8,23 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = ({
-                           children,
-                           variant = 'primary',
-                           size = 'medium',
-                           className = '',
-                           ...props
-                       }: ButtonProps) => {
-    const baseClasses = `btn btn${variant} btn${size}`;
-    const combinedClasses = `${baseClasses} ${className}`;
+               children,
+               variant = 'Primary',
+               size = 'Medium',
+               className = '',
+               ...props
+           }: ButtonProps) => {
+
+    const buttonClasses = [
+        styles.btn,
+        styles[`btn${variant}`],
+        styles[`btn${size}`],
+        className
+    ].filter(cls => cls).join(' ');
 
     return (
         <button
-            className={combinedClasses}
+            className={buttonClasses}
             {...props}
         >
             {children}

@@ -14,7 +14,7 @@ export const AboutModal = () => {
             <p>Это учебный проект на React + TypeScript для отображения списка постов</p>
             <Button
                 onClick={closeModal}
-                variant="primary"
+                variant="Primary"
             >
                 Закрыть
             </Button>
