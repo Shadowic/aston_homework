@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, FC, ReactNode } from 'react';
 
 export type Theme = 'light' | 'dark';
 
@@ -7,9 +7,20 @@ interface ThemeContextType {
     toggleTheme: () => void;
 }
 
-export const ThemeContext = createContext<ThemeContextType>({
-    theme: 'light',
-    toggleTheme: () => {},
-});
+export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const useTheme = () => useContext(ThemeContext);
+interface ThemeProviderProps {
+    children: ReactNode;
+}
+
+export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
+    return null;
+};
+
+export const useTheme = () => {
+    const context = useContext(ThemeContext);
+    if (context === undefined) {
+        throw new Error('err');
+    }
+    return context;
+};

@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { FC, ButtonHTMLAttributes, ReactNode } from 'react';
 import styles from "./Button.module.css"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -7,14 +7,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     size?: 'Small' | 'Medium' | 'Large';
 }
 
-export const Button = ({
-               children,
-               variant = 'Primary',
-               size = 'Medium',
-               className = '',
-               ...props
-           }: ButtonProps) => {
-
+export const Button: FC<ButtonProps> = ({
+    children,
+    variant = 'Primary',
+    size = 'Medium',
+    className = '',
+    ...props
+}) => {
     const buttonClasses = [
         styles.btn,
         styles[`btn${variant}`],

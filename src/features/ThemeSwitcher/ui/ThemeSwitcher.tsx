@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { useTheme } from '../../../shared/lib/theme';
 import styles from "./ThemeSwitcher.module.css"
 
-export const ThemeSwitcher = () => {
+export const ThemeSwitcher: FC = () => {
     const { theme, toggleTheme } = useTheme();
 
     return (

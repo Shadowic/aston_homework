@@ -1,9 +1,14 @@
+import { FC } from 'react';
 import { useModal } from '../shared/lib/context/ModalContext';
 import { Modal } from '../shared/ui/Modal';
 import { Button } from '../shared/ui/Button';
 
-export const AboutModal = () => {
+export const AboutModal: FC = () => {
     const { isModalOpen, closeModal } = useModal();
+
+    const handleClose = () => {
+        closeModal();
+    };
 
     return (
         <Modal
@@ -13,7 +18,7 @@ export const AboutModal = () => {
         >
             <p>Это учебный проект на React + TypeScript для отображения списка постов</p>
             <Button
-                onClick={closeModal}
+                onClick={handleClose}
                 variant="Primary"
             >
                 Закрыть

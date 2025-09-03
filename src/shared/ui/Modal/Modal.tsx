@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { FC, ReactNode, useEffect, useCallback, MouseEvent } from 'react';
 import { createPortal } from 'react-dom';
 import styles from "./Modal.module.css"
 
@@ -9,7 +9,21 @@ interface ModalProps {
     title?: string;
 }
 
-export const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
+export const Modal: FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
+    const handleOverlayClick = useCallback(() => {
+        onClose();
+    }, [onClose]);
+
+    const handleContentClick = useCallback((e: MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+    }, []);
+
+    const handleEscape = useCallback((e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            onClose();
+        }
+    }, [onClose]);
+
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -23,12 +37,6 @@ export const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
     }, [isOpen]);
 
     useEffect(() => {
-        const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                onClose();
-            }
-        };
-
         if (isOpen) {
             document.addEventListener('keydown', handleEscape);
         }
@@ -36,13 +44,13 @@ export const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
         return () => {
             document.removeEventListener('keydown', handleEscape);
         };
-    }, [isOpen, onClose]);
+    }, [isOpen, handleEscape]);
 
     if (!isOpen) return null;
 
     return createPortal(
-        <div className={styles.modalOverlay} onClick={onClose}>
-            <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+        <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+            <div className={styles.modalContent} onClick={handleContentClick}>
                 {title && <h3 className={styles.modalTitle}>{title}</h3>}
                 <button
                     className={styles.modalClose}
