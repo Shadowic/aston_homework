@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { CommentList } from "../../../widgets/CommentList/ui/CommentList";
+import { mockComments } from '../../../shared/mocks/comments';
 import styles from "./PostCard.module.css"
 
 interface Post {
@@ -20,6 +22,12 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
             <small className={styles.caption}>
                 User ID: {post.userId} | Post ID: {post.id}
             </small>
+
+            <CommentList
+                comments={mockComments}
+                initialVisible={2}
+                showToggleButton={true}
+            />
         </div>
     );
 };
