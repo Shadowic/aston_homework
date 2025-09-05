@@ -1,6 +1,7 @@
 import { FC, Fragment } from 'react';
 import { PostCard } from "../../entities/post/ui/PostCard";
 import { mockPosts } from "../../shared/mocks/posts";
+import { withLoading } from '../../shared/lib/hoc/withLoading';
 import styles from './PostList.module.css';
 
 export const PostList: FC = () => {
@@ -17,3 +18,5 @@ export const PostList: FC = () => {
         </Fragment>
     );
 };
+
+export const PostListWithLoading = withLoading(PostList);
