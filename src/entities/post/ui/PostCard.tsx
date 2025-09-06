@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { CommentList } from "../../../widgets/CommentList/ui/CommentList";
-import { mockComments } from '../../../shared/mocks/comments';
-import styles from "./PostCard.module.css"
+import { mockComments } from "../../../shared/mocks/comments";
+import styles from "./PostCard.module.css";
 
 interface Post {
     id: number;

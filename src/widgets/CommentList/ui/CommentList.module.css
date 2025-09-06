@@ -111,14 +111,14 @@
 }
 
 .collapseBtn {
-    background: var(--secondary-color, #6b7280);
+    background: var(--secondary-color);
     color: white;
-    border-color: var(--secondary-color, #6b7280);
+    border-color: var(--secondary-color);
 }
 
 .collapseBtn:hover {
-    background: var(--secondary-hover, #4b5563);
-    border-color: var(--secondary-hover, #4b5563);
+    background: var(--secondary-hover);
+    border-color: var(--secondary-hover);
 }
 
 .empty {
