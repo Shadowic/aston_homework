@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react';
+import { FC, Fragment, useState, useMemo, useCallback } from 'react';
 import { PostCard } from "../../entities/post/ui/PostCard";
 import { mockPosts } from "../../shared/mocks/posts";
 import { withLoading } from '../../shared/lib/hoc/withLoading';
@@ -11,11 +11,13 @@ type SortDirection = 'asc' | 'desc';
 export const PostList: FC = () => {
     const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
-    const filteredPosts = filterByLength(mockPosts, sortDirection);
+    const filteredPosts = useMemo(() => {
+        return filterByLength(mockPosts, sortDirection);
+    }, [mockPosts, sortDirection]);
 
-    const handleFilterChange = (direction: SortDirection) => {
+    const handleFilterChange = useCallback((direction: SortDirection) => {
         setSortDirection(direction);
-    };
+    }, []);
 
     return (
         <Fragment>
