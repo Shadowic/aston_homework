@@ -1,6 +1,13 @@
-import { useState, useEffect, FC, ReactNode } from 'react';
-import { ThemeContext } from './ThemeContext';
-import type { Theme } from './ThemeContext';
+import { createContext, useContext, useState, useEffect, FC, ReactNode } from 'react';
+
+export type Theme = 'light' | 'dark';
+
+interface ThemeContextType {
+    theme: Theme;
+    toggleTheme: () => void;
+}
+
+export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
     children: ReactNode;
@@ -23,7 +30,15 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            {children}
-        </ThemeContext.Provider>
-    );
+    {children}
+    </ThemeContext.Provider>
+);
+};
+
+export const useTheme = () => {
+    const context = useContext(ThemeContext);
+    if (context === undefined) {
+        throw new Error('Err');
+    }
+    return context;
 };
