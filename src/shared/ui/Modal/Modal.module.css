@@ -1,71 +1,98 @@
 .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    backdrop-filter: blur(2px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
 }
 
 .modalContent {
-    background: var(--bg-color);
-    padding: 2rem;
-    border-radius: 12px;
-    position: relative;
-    max-width: 500px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--border-color);
-    animation: fadeIn 0.3s ease;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--card-border);
 }
 
 .modalClose {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-color);
-    padding: 0.25rem;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  z-index: 10;
 }
 
-.modalClose:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.modalHeader {
-    display: flex;
-}
-
-.modalBody {
-    display: flex;
-}
-
-.modalFooter {
-    display: flex;
-}
-
-.modalTitle {
-    margin: 0 0 1rem 0;
-    color: var(--text-color);
-    font-size: 1.5rem;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (max-width: 768px) {
-    .modalContent {
-        padding: 1.5rem;
-        width: 95%;
-        margin: 1rem;
-    }
+  .modalOverlay {
+    padding: 16px;
+  }
+
+  .modalContent {
+    padding: 20px;
+    max-height: 90vh;
+  }
+
+  .modalClose {
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .modalClose {
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    font-size: 1.1rem;
+  }
 }

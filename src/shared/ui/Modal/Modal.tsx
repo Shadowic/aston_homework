@@ -1,65 +1,71 @@
-import { FC, ReactNode, useEffect, useCallback, MouseEvent } from 'react';
-import { createPortal } from 'react-dom';
+import { FC, ReactNode, useEffect, useCallback, MouseEvent } from "react";
+import { createPortal } from "react-dom";
+import { Button } from "../../../shared/ui/Button";
 import styles from "./Modal.module.css";
 
 interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    children: ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
 }
 
 export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
-    const handleOverlayClick = useCallback(() => {
+  const handleOverlayClick = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
+  const handleContentClick = useCallback((e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  }, []);
+
+  const handleEscape = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
         onClose();
-    }, [onClose]);
+      }
+    },
+    [onClose],
+  );
 
-    const handleContentClick = useCallback((e: MouseEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-    }, []);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
 
-    const handleEscape = useCallback((e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-            onClose();
-        }
-    }, [onClose]);
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscape);
+    }
 
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [isOpen]);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isOpen, handleEscape]);
 
-    useEffect(() => {
-        if (isOpen) {
-            document.addEventListener('keydown', handleEscape);
-        }
+  if (!isOpen) return null;
 
-        return () => {
-            document.removeEventListener('keydown', handleEscape);
-        };
-    }, [isOpen, handleEscape]);
-
-    if (!isOpen) return null;
-
-    return createPortal(
-        <div className={styles.modalOverlay} onClick={handleOverlayClick}>
-            <div className={styles.modalContent} onClick={handleContentClick}>
-                <button
-                    className={styles.modalClose}
-                    onClick={onClose}
-                    aria-label="Закрыть модальное окно"
-                >
-                    ×
-                </button>
-                {children}
-            </div>
-        </div>,
-        document.body
-    );
+  return createPortal(
+    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+      <div className={styles.modalContent} onClick={handleContentClick}>
+        <Button
+          variant="Outline"
+          size="Small"
+          onClick={onClose}
+          className={styles.modalClose}
+          aria-label="Закрыть модальное окно"
+        >
+          ×
+        </Button>
+        {children}
+      </div>
+    </div>,
+    document.body,
+  );
 };

@@ -1,0 +1,31 @@
+.tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text-color);
+  background-color: var(--button-bg);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.tab.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}

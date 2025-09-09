@@ -1,13 +1,13 @@
 .footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 20px 40px;
-    background-color: var(--bg-color);
-    border-top: 1px solid var(--border-color);
-    color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px 40px;
+  background-color: var(--bg-color);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-color);
 }
 
 .title {
-    font-size: 1rem;
+  font-size: 1rem;
 }
