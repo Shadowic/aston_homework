@@ -5,38 +5,39 @@ import styles from './PostLengthFilter.module.css';
 export type SortDirection = "asc" | "desc";
 
 interface PostLengthFilterProps {
-  onFilterChange: (direction: SortDirection) => void;
-  currentDirection: SortDirection;
+    onFilterChange: (direction: SortDirection) => void;
+    currentDirection: SortDirection;
 }
 
 export const PostLengthFilter: FC<PostLengthFilterProps> = ({
-        onFilterChange,
-        currentDirection
-    }) => {
+                                                                onFilterChange,
+                                                                currentDirection
+                                                            }) => {
     const handleDirectionChange = useCallback((direction: SortDirection) => {
         onFilterChange(direction);
     }, [onFilterChange]);
-  return (
-    <div className={styles.filter}>
-      <label className={styles.label}>Сортировка по длине заголовка:</label>
-      <div className={styles.buttons}>
-        <Button
-          variant={currentDirection === "asc" ? "Primary" : "Outline"}
-          size="Small"
-          onClick={() => handleDirectionChange("asc")}
-          className={styles.button}
-        >
-          ↑ По возрастанию
-        </Button>
-        <Button
-          variant={currentDirection === "desc" ? "Primary" : "Outline"}
-          size="Small"
-          onClick={() => handleDirectionChange("desc")}
-          className={styles.button}
-        >
-          ↓ По убыванию
-        </Button>
-      </div>
-    </div>
-  );
+
+    return (
+        <div className={styles.filter}>
+            <label className={styles.label}>Сортировка по длине заголовка:</label>
+            <div className={styles.buttons}>
+                <Button
+                    variant={currentDirection === "asc" ? "Primary" : "Outline"}
+                    size="Small"
+                    onClick={() => handleDirectionChange("asc")}
+                    className={styles.button}
+                >
+                    ↑ По возрастанию
+                </Button>
+                <Button
+                    variant={currentDirection === "desc" ? "Primary" : "Outline"}
+                    size="Small"
+                    onClick={() => handleDirectionChange("desc")}
+                    className={styles.button}
+                >
+                    ↓ По убыванию
+                </Button>
+            </div>
+        </div>
+    );
 };

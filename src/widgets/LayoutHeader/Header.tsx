@@ -1,5 +1,5 @@
 import { FC, useCallback, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useModal } from "../../shared/lib/context/ModalContext";
 import { ThemeSwitcher } from "../../features/ThemeSwitcher/ui/ThemeSwitcher";
 import { Button } from "../../shared/ui/Button";
@@ -7,11 +7,19 @@ import styles from "./Header.module.css";
 
 export const Header: FC = () => {
     const { openModal } = useModal();
+    const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleAboutClick = useCallback(() => {
         openModal();
     }, [openModal]);
+
+    const isActiveRoute = (path: string) => {
+        return (
+            location.pathname === path ||
+            location.pathname.startsWith(path + "/")
+        );
+    };
 
     return (
         <header className={styles.header}>
