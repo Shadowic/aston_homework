@@ -57,3 +57,6 @@ jspm_packages/
 
 # DynamoDB Local files
 .dynamodb/
+.vite/
+dist/
+build/

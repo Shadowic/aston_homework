@@ -1,12 +1,28 @@
 .card {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc;
-    padding: 16px;
-    border-radius: 8px;
-    color: #fafafa;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--text-color);
+}
+
+.text {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
 }
 
 .caption {
-    margin-top: auto;
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+  margin-top: auto;
 }
