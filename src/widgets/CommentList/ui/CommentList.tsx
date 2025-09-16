@@ -1,4 +1,5 @@
 import { FC, useState, useCallback } from 'react';
+import { Comment } from './Comment';
 import styles from './CommentList.module.css';
 
 interface Comment {
@@ -65,13 +66,7 @@ export const CommentList: FC<CommentListProps> = ({
                 <>
                     <div className={styles.comments}>
                         {visibleComments.map(comment => (
-                            <div key={comment.id} className={styles.comment}>
-                                <div className={styles.commentHeader}>
-                                    <span className={styles.author}>{comment.author}</span>
-                                    <span className={styles.date}>{comment.date}</span>
-                                </div>
-                                <p className={styles.text}>{comment.text}</p>
-                            </div>
+                            <Comment key={comment.id} comment={comment} />
                         ))}
                     </div>
 
