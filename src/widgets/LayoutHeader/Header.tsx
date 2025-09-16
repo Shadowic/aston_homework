@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { useModal } from '../../shared/lib/context/ModalContext';
 import { ThemeSwitcher } from '../../features/ThemeSwitcher/ui/ThemeSwitcher';
 import { Button } from '../../shared/ui/Button';
@@ -7,9 +7,9 @@ import styles from "./Header.module.css";
 export const Header: FC = () => {
     const { openModal } = useModal();
 
-    const handleAboutClick = () => {
+    const handleAboutClick = useCallback(() => {
         openModal();
-    };
+    }, [openModal]);
 
     return (
         <header className={styles.header}>

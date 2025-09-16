@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import styles from './PostLengthFilter.module.css';
 
 export type SortDirection = 'asc' | 'desc';
@@ -12,9 +12,9 @@ export const PostLengthFilter: FC<PostLengthFilterProps> = ({
         onFilterChange,
         currentDirection
     }) => {
-    const handleDirectionChange = (direction: SortDirection) => {
+    const handleDirectionChange = useCallback((direction: SortDirection) => {
         onFilterChange(direction);
-    };
+    }, [onFilterChange]);
 
     return (
         <div className={styles.filter}>
