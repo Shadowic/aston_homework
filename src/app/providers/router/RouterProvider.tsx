@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { Suspense } from "react";
 import { MainLayout } from "../../../shared/layouts/MainLayout";
 import { PostListPage } from "../../../pages/PostList";
@@ -14,10 +14,10 @@ import { withLoading } from "../../../shared/lib/hoc/withLoading";
 const PostListPageWithLoading = withLoading(PostListPage);
 const PostDetailsWithLoading = withLoading(PostDetails);
 const UserListWithLoading = withLoading(UserList);
-const UserAlbumsWithLoading = withLoading(UserAlbums);
-const AlbumPhotosWithLoading = withLoading(AlbumPhotos);
-const UserTodosWithLoading = withLoading(UserTodos);
 const UserPostsWithLoading = withLoading(UserPosts);
+const UserAlbumsWithLoading = withLoading(UserAlbums);
+const UserTodosWithLoading = withLoading(UserTodos);
+const AlbumPhotosWithLoading = withLoading(AlbumPhotos);
 
 export const RouterProvider = () => {
   return (
@@ -28,11 +28,18 @@ export const RouterProvider = () => {
             <Route index element={<PostListPageWithLoading />} />
             <Route path="posts" element={<PostListPageWithLoading />} />
             <Route path="posts/:id" element={<PostDetailsWithLoading />} />
-            <Route path="users" element={<UserListWithLoading />} />
-            <Route path="users/:id/albums" element={<UserAlbumsWithLoading />} />
-            <Route path="albums/:id/photos" element={<AlbumPhotosWithLoading />} />
-            <Route path="users/:id/todos" element={<UserTodosWithLoading />} />
-            <Route path="users/:id/posts" element={<UserPostsWithLoading />} />
+
+            <Route path="users">
+              <Route index element={<UserListWithLoading />} />
+              <Route path=":id">
+                <Route path="posts" element={<UserPostsWithLoading />} />
+                <Route path="albums" element={<UserAlbumsWithLoading />} />
+                <Route path="todos" element={<UserTodosWithLoading />} />
+                <Route path="albums/:albumId">
+                  <Route path="photos" element={<AlbumPhotosWithLoading />} />
+                </Route>
+              </Route>
+            </Route>
           </Route>
         </Routes>
       </Suspense>

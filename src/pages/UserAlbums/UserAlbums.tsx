@@ -1,16 +1,17 @@
 import { FC } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { mockAlbums } from "../../shared/mocks/albums";
-import { mockPhotos } from "../../shared/mocks/photos";
 import styles from "./UserAlbums.module.css";
 import { UserTabs } from "../../widgets/UserTabs/UserTabs";
 
 export const UserAlbums: FC = () => {
   const { id } = useParams();
   const userAlbums = mockAlbums.filter((album) => album.userId === Number(id));
+
   const userAlbumsWithPhotos = userAlbums.map((album) => ({
     ...album,
-    photoCount: mockPhotos.filter((photo) => photo.albumId === album.id).length,
+      photoCount: album.photos ? album.photos.length : 0,
+      firstPhoto: album.photos && album.photos.length > 0 ? album.photos[0] : null,
   }));
 
   if (userAlbumsWithPhotos.length === 0) {
@@ -31,14 +32,24 @@ export const UserAlbums: FC = () => {
       <h2 className={styles.title}>Альбомы пользователя #{id}</h2>
       <div className={styles.albumsGrid}>
         {userAlbumsWithPhotos.map((album) => (
-          <div key={album.id} className={styles.albumCard}>
-            <div className={styles.albumPlaceholder}></div>
-            <h3 className={styles.albumTitle}>{album.title}</h3>
-            <div className={styles.albumInfo}>
-              <span className={styles.userId}>User: {album.userId}</span>
-              <span className={styles.photoCount}>{album.photoCount} фото</span>
-            </div>
-          </div>
+          <Link
+              key={album.id}
+              to={`/users/${id}/albums/${album.id}/photos`}
+          >
+              <div className={styles.albumCard}>
+                 <div className={styles.albumBg}>
+                   <img
+                     src={album.firstPhoto.thumbnailUrl}
+                     alt={album.title}
+                   />
+                 </div>
+                <h3 className={styles.albumTitle}>{album.title}</h3>
+                <div className={styles.albumInfo}>
+                  <span className={styles.userId}>User: {album.userId}</span>
+                  <span className={styles.photoCount}>{album.photoCount} фото</span>
+                </div>
+              </div>
+          </Link>
         ))}
       </div>
     </div>

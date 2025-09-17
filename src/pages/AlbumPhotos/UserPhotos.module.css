@@ -1,0 +1,22 @@
+.userPhotos {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.photo {
+  width: 140px;
+  height: 140px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
