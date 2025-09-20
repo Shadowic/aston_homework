@@ -1,31 +1,55 @@
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { UserTabs } from "../../widgets/UserTabs/UserTabs";
-import { mockAlbums } from "../../shared/mocks/albums";
+import { useGetPhotosByAlbumIdQuery } from "../../entities/album/api/albumsApi";
+import { useGetAlbumByIdQuery } from "../../entities/album/api/albumsApi";
+import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
 import styles from "./userPhotos.module.css";
 
 export const AlbumPhotos: FC = () => {
-  const { id, albumId } = useParams();
+    const { id, albumId } = useParams();
+    const albumIdNumber = albumId ? Number(albumId) : 0;
+    const userId = id ? Number(id) : 0;
 
-  const album = mockAlbums.find(album => album.id === Number(albumId));
-  const albumPhotos = album?.photos || [];
+    const {
+        data: album,
+        isLoading: albumLoading,
+        error: albumError,
+    } = useGetAlbumByIdQuery(albumIdNumber, {
+        skip: !albumIdNumber,
+    });
 
-  return (
-      <div className={`${styles.userPhotos} container`}>
-        <UserTabs userId={Number(id)} />
-        <h2>Фотографии альбома: {album?.title || `#${albumId}`}</h2>
+    const {
+        data: albumPhotos = [],
+        isLoading: photosLoading,
+        error: photosError,
+    } = useGetPhotosByAlbumIdQuery(albumIdNumber, {
+        skip: !albumIdNumber,
+    });
 
-        <div className={styles.photos}>
-          {albumPhotos.map((photo) => (
-              <div key={photo.id} className={styles.photo}>
-                <img
-                    src={photo.thumbnailUrl}
-                    alt={photo.title}
-                    className={styles.image}
-                />
-              </div>
-          ))}
+    const isLoading = albumLoading || photosLoading;
+    const error = albumError || photosError;
+
+    if (isLoading) return <LoadingSpinner />;
+    if (error) return <div>Error: {(error as any).toString()}</div>;
+    if (!id || !albumId) return <div>User or album not found</div>;
+
+    return (
+        <div className={`${styles.userPhotos} container`}>
+            <UserTabs userId={userId} />
+            <h2>Фотографии альбома: {album?.title || `#${albumId}`}</h2>
+
+            <div className={styles.photos}>
+                {albumPhotos.map((photo) => (
+                    <div key={photo.id} className={styles.photo}>
+                        <img
+                            src={photo.thumbnailUrl}
+                            alt={photo.title}
+                            className={styles.image}
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
-      </div>
-  );
+    );
 };

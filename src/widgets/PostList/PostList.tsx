@@ -1,5 +1,5 @@
 import { FC, Fragment, useState, useMemo, useCallback } from "react";
-import { PostCard } from "../../entities/post/ui/PostCard";
+import { PostCard } from "../../entities/post/ui";
 import { mockPosts } from "../../shared/mocks/posts";
 import { PostLengthFilter } from "../../features/PostLengthFilter/ui/PostLengthFilter";
 import { filterByLength } from "../../features/PostLengthFilter/lib/filterByLength";

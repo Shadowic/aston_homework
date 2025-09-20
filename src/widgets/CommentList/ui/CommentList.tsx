@@ -1,5 +1,6 @@
 import { FC, useState, useCallback } from "react";
 import { Button } from "../../../shared/ui/Button";
+import { LoadingSpinner } from "../../../shared/ui/LoadingSpinner/LoadingSpinner";
 import styles from "./CommentList.module.css";
 
 interface Comment {
@@ -14,6 +15,8 @@ interface CommentListProps {
   initialVisible?: number;
   showToggleButton?: boolean;
   defaultVisible?: boolean;
+  isLoading?: boolean;
+  postId?: number;
 }
 
 export const CommentList: FC<CommentListProps> = ({
@@ -21,6 +24,8 @@ export const CommentList: FC<CommentListProps> = ({
                                                     initialVisible = 3,
                                                     showToggleButton = true,
                                                     defaultVisible = false,
+                                                    isLoading = false,
+                                                    postId,
                                                   }) => {
   const [isVisible, setIsVisible] = useState(defaultVisible);
   const [showAll, setShowAll] = useState(false);
@@ -52,6 +57,14 @@ export const CommentList: FC<CommentListProps> = ({
   const hasComments = comments.length > 0;
   const canCollapse = showAll || visibleCount > initialVisible;
 
+  if (isLoading) {
+    return (
+        <div className={styles.commentList}>
+          <LoadingSpinner size="small" />
+        </div>
+    );
+  }
+
   return (
       <div className={styles.commentList}>
         {showToggleButton && (
@@ -72,7 +85,10 @@ export const CommentList: FC<CommentListProps> = ({
                   <>
                     <div className={styles.comments}>
                       {visibleComments.map((comment) => (
-                          <div key={comment.id} className={styles.comment}>
+                          <div
+                              key={`${postId}-${comment.id}`}
+                              className={styles.comment}
+                          >
                             <div className={styles.commentHeader}>
                               <span className={styles.author}>{comment.author}</span>
                               <span className={styles.date}>{comment.date}</span>

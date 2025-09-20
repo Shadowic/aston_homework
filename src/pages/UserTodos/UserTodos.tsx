@@ -1,15 +1,24 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
-import { mockTodos } from "../../shared/mocks/todos";
+import { useGetTodosByUserIdQuery } from "../../entities/todo/api/todosApi";
 import { Button } from "../../shared/ui/Button";
+import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
 import styles from "./UserTodos.module.css";
 import { UserTabs } from "../../widgets/UserTabs/UserTabs";
 
 export const UserTodos: FC = () => {
   const { id } = useParams();
   const [filter, setFilter] = useState<"all" | "completed" | "active">("all");
+  const userId = id ? Number(id) : 0;
 
-  const userTodos = mockTodos.filter((todo) => todo.userId === Number(id));
+  const {
+    data: userTodos = [],
+    isLoading,
+    error,
+  } = useGetTodosByUserIdQuery(userId, {
+    skip: !userId,
+  });
+
   const filteredTodos = userTodos.filter((todo) => {
     if (filter === "completed") return todo.completed;
     if (filter === "active") return !todo.completed;
@@ -19,9 +28,26 @@ export const UserTodos: FC = () => {
   const completedCount = userTodos.filter((todo) => todo.completed).length;
   const activeCount = userTodos.filter((todo) => !todo.completed).length;
 
+  if (isLoading) {
+    return (
+      <div className={`${styles.userTodos} container`}>
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={`${styles.userTodos} container`}>
+        <h2 className={styles.title}>Задачи пользователя #{id}</h2>
+        <div>Ошибка при загрузке задач</div>
+      </div>
+    );
+  }
+
   return (
     <div className={`${styles.userTodos} container`}>
-      <UserTabs userId={Number(id)} />
+      <UserTabs userId={userId} />
       <h2 className={styles.title}>Задачи пользователя #{id}</h2>
 
       <div className={styles.stats}>
@@ -81,9 +107,7 @@ export const UserTodos: FC = () => {
               >
                 {todo.title}
               </div>
-              <span
-                className={`${styles.todoStatus} ${todo.completed ? styles.statusCompleted : styles.statusPending}`}
-              >
+              <span className={`${styles.todoStatus}`}>
                 {todo.completed ? "Выполнено" : "В процессе"}
               </span>
             </div>

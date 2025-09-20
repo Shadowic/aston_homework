@@ -1,21 +1,80 @@
 import { FC } from "react";
 import { useParams, Link } from "react-router-dom";
-import { mockAlbums } from "../../shared/mocks/albums";
-import { mockPhotos } from "../../shared/mocks/photos";
-import styles from "./UserAlbums.module.css";
+import { useGetAlbumsByUserIdQuery } from "../../entities/album/api/albumsApi";
+import { useGetPhotosByAlbumIdQuery } from "../../entities/album/api/albumsApi";
 import { UserTabs } from "../../widgets/UserTabs/UserTabs";
+import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
+import styles from "./UserAlbums.module.css";
+
+interface AlbumCardProps {
+    album: any;
+    userId: number;
+}
+
+const AlbumCard: FC<AlbumCardProps> = ({ album, userId }) => {
+    const { data: photos = [] } = useGetPhotosByAlbumIdQuery(album.id, {
+        skip: !album.id,
+    });
+
+    const firstPhoto = photos.length > 0 ? photos[0] : null;
+    const photoCount = photos.length;
+
+    return (
+        <Link
+            to={`/users/${userId}/albums/${album.id}/photos`}
+            className={styles.albumLink}
+        >
+            <div className={styles.albumCard}>
+                <div className={styles.albumBg}>
+                    {firstPhoto ? (
+                        <img
+                            src={firstPhoto.thumbnailUrl}
+                            alt={album.title}
+                        />
+                    ) : (
+                        <div className={styles.albumPlaceholder}>📷</div>
+                    )}
+                </div>
+                <h3 className={styles.albumTitle}>{album.title}</h3>
+                <div className={styles.albumInfo}>
+                    <span className={styles.userId}>User: {album.userId}</span>
+                    <span className={styles.photoCount}>{photoCount} фото</span>
+                </div>
+            </div>
+        </Link>
+    );
+};
 
 export const UserAlbums: FC = () => {
     const { id } = useParams();
-    const userAlbums = mockAlbums.filter((album) => album.userId === Number(id));
+    const userId = id ? Number(id) : 0;
 
-    const userAlbumsWithPhotos = userAlbums.map((album) => ({
-        ...album,
-        photoCount: mockPhotos.filter((photo) => photo.albumId === album.id).length,
-        firstPhoto: mockPhotos.find((photo) => photo.albumId === album.id) || null,
-    }));
+    const {
+        data: albums = [],
+        isLoading,
+        error,
+    } = useGetAlbumsByUserIdQuery(userId, {
+        skip: !userId,
+    });
 
-    if (userAlbumsWithPhotos.length === 0) {
+    if (isLoading) {
+        return (
+            <div className={styles.userAlbums}>
+                <LoadingSpinner />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className={styles.userAlbums}>
+                <h2 className={styles.title}>Альбомы пользователя #{id}</h2>
+                <div>Ошибка при загрузке альбомов</div>
+            </div>
+        );
+    }
+
+    if (albums.length === 0) {
         return (
             <div className={styles.userAlbums}>
                 <h2 className={styles.title}>Альбомы пользователя #{id}</h2>
@@ -29,31 +88,11 @@ export const UserAlbums: FC = () => {
 
     return (
         <div className={`${styles.userAlbums} container`}>
-            <UserTabs userId={Number(id)} />
+            <UserTabs userId={userId} />
             <h2 className={styles.title}>Альбомы пользователя #{id}</h2>
             <div className={styles.albumsGrid}>
-                {userAlbumsWithPhotos.map((album) => (
-                    <Link
-                        key={album.id}
-                        to={`/users/${id}/albums/${album.id}/photos`}
-                        className={styles.albumLink}
-                    >
-                        <div className={styles.albumCard}>
-                            <div className={styles.albumBg}>
-                                {album.firstPhoto && (
-                                    <img
-                                        src={album.firstPhoto.thumbnailUrl}
-                                        alt={album.title}
-                                    />
-                                )}
-                            </div>
-                            <h3 className={styles.albumTitle}>{album.title}</h3>
-                            <div className={styles.albumInfo}>
-                                <span className={styles.userId}>User: {album.userId}</span>
-                                <span className={styles.photoCount}>{album.photoCount} фото</span>
-                            </div>
-                        </div>
-                    </Link>
+                {albums.map((album) => (
+                    <AlbumCard key={album.id} album={album} userId={userId} />
                 ))}
             </div>
         </div>
