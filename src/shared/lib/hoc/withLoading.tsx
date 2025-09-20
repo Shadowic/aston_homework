@@ -1,17 +1,16 @@
-import { FC } from 'react';
+import { FC } from "react";
 
 export const withLoading = (Component: FC) => {
-    const WithLoading: FC<{ isLoading?: boolean }> = ({ isLoading, ...props }) => {
-        if (isLoading) {
-            return (
-                <div>
-                    Загрузка...
-                </div>
-            );
-        }
+  const WithLoading: FC<{ isLoading?: boolean }> = ({
+    isLoading,
+    ...props
+  }) => {
+    if (isLoading) {
+      return <div>Загрузка...</div>;
+    }
 
-        return <Component {...props} />;
-    };
+    return <Component {...props} />;
+  };
 
-    return WithLoading;
+  return WithLoading;
 };

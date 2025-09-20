@@ -1,17 +1,20 @@
-import { FC } from 'react';
-import { useTheme } from '../../../shared/lib/theme';
-import styles from "./ThemeSwitcher.module.css"
+import { FC } from "react";
+import { useTheme } from "../../../shared/lib/theme";
+import { Button } from "../../../shared/ui/Button";
+import styles from "./ThemeSwitcher.module.css";
 
 export const ThemeSwitcher: FC = () => {
-    const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
-    return (
-        <button
-            onClick={toggleTheme}
-            className={styles.themeSwitcher}
-            aria-label="Переключить тему"
-        >
-            {theme === 'light' ? '🌙' : '☀️'}
-        </button>
-    );
+  return (
+    <Button
+      onClick={toggleTheme}
+      variant="Outline"
+      size="Small"
+      className={styles.themeSwitcher}
+      aria-label="Переключить тему"
+    >
+      {theme === "light" ? "🌙" : "☀️"}
+    </Button>
+  );
 };
