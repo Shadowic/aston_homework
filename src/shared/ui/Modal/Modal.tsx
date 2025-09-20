@@ -1,15 +1,14 @@
 import { FC, ReactNode, useEffect, useCallback, MouseEvent } from 'react';
 import { createPortal } from 'react-dom';
-import styles from "./Modal.module.css"
+import styles from "./Modal.module.css";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     children: ReactNode;
-    title?: string;
 }
 
-export const Modal: FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
+export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
     const handleOverlayClick = useCallback(() => {
         onClose();
     }, [onClose]);
@@ -51,7 +50,6 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
     return createPortal(
         <div className={styles.modalOverlay} onClick={handleOverlayClick}>
             <div className={styles.modalContent} onClick={handleContentClick}>
-                {title && <h3 className={styles.modalTitle}>{title}</h3>}
                 <button
                     className={styles.modalClose}
                     onClick={onClose}
