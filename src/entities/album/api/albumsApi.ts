@@ -1,18 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export interface Album {
-  id: number;
-  userId: number;
-  title: string;
-}
-
-export interface Photo {
-  id: number;
-  albumId: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-}
+import type { Album, Photo } from "@entities/album/model/types";
 
 export const albumsApi = createApi({
   reducerPath: "albumsApi",
@@ -76,11 +63,9 @@ export const albumsApi = createApi({
   }),
 });
 
-export const {
-  useGetAlbumsQuery,
-  useGetAlbumsByUserIdQuery,
-  useGetAlbumByIdQuery,
-  useGetPhotosByAlbumIdQuery,
-  useCreateAlbumMutation,
-  useDeleteAlbumMutation,
-} = albumsApi;
+export const useGetAlbumsQuery = albumsApi.useGetAlbumsQuery;
+export const useGetAlbumsByUserIdQuery = albumsApi.useGetAlbumsByUserIdQuery;
+export const useGetAlbumByIdQuery = albumsApi.useGetAlbumByIdQuery;
+export const useGetPhotosByAlbumIdQuery = albumsApi.useGetPhotosByAlbumIdQuery;
+export const useCreateAlbumMutation = albumsApi.useCreateAlbumMutation;
+export const useDeleteAlbumMutation = albumsApi.useDeleteAlbumMutation;

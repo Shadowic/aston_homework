@@ -1,14 +1,9 @@
 import type { FC } from "react";
-import { useGetCommentsByPostIdQuery } from "../../../../entities/comment/api/commentsApi";
-import { CommentList } from "../../../../widgets/CommentList/ui/CommentList";
+import { useGetCommentsByPostIdQuery } from "@entities/comment/api/commentsApi";
+import { CommentList } from "@widgets/CommentList/ui/CommentList";
+import type { Post } from "../../model/types";
+import type { Comment } from "@entities/comment/model/types";
 import styles from "./PostCard.module.css";
-
-interface Post {
-  id: number;
-  userId: number;
-  title: string;
-  body: string;
-}
 
 interface PostCardProps {
   post: Post;
@@ -18,7 +13,7 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
   const { data: comments = [], isLoading: commentsLoading } =
     useGetCommentsByPostIdQuery(post.id);
 
-  const formattedComments = comments.map((comment) => ({
+  const formattedComments = comments.map((comment: Comment) => ({
     id: comment.id,
     author: comment.name,
     text: comment.body,

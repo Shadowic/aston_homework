@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { mockPosts } from "../../../../shared/mocks/posts";
+import { mockPosts } from "@shared/mocks/posts";
 
 export const usePosts = (userId?: number) => {
   const [posts, setPosts] = useState(mockPosts);

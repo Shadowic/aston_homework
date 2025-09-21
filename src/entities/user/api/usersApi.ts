@@ -1,21 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    city: string;
-    zipcode: string;
-  };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-  };
-}
+import type { User } from "@entities/user/model/types";
 
 export const usersApi = createApi({
   reducerPath: "usersApi",
@@ -26,11 +10,18 @@ export const usersApi = createApi({
   endpoints: (build) => ({
     getUsers: build.query<User[], void>({
       query: () => "users",
-      providesTags: ["User"],
+      providesTags: (result) =>
+          result
+              ? [
+                ...result.map(({ id }) => ({ type: "User" as const, id })),
+                { type: "User", id: "LIST" },
+              ]
+              : [{ type: "User", id: "LIST" }],
     }),
     getUserById: build.query<User, number>({
       query: (id) => `users/${id}`,
-      providesTags: ["User"],
+      providesTags: (result, _, id) =>
+          result ? [{ type: "User", id }] : [],
     }),
   }),
 });

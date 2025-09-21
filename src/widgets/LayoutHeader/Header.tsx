@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react";
 import type { FC } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useModal } from "../../shared/lib/context/ModalContext";
-import { ThemeSwitcher } from "../../features/ThemeSwitcher/ui/ThemeSwitcher";
+import { useModal } from "@/shared/lib/context/ModalContext";
+import { ThemeSwitcher } from "@/features/ThemeSwitcher/ui/ThemeSwitcher";
+
 import { Button } from "../../shared/ui/Button";
 import styles from "./Header.module.css";
 
@@ -52,7 +53,6 @@ export const Header: FC = () => {
           >
             О проекте
           </Button>
-
           <button
             className={styles.burger}
             onClick={() => setIsMenuOpen(!isMenuOpen)}

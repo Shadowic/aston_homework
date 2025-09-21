@@ -3,7 +3,7 @@ import { ModalProvider } from "../shared/lib/context/ModalContext";
 import { StoreProvider } from "./providers/StoreProvider";
 import { RouterProvider } from "./providers/router/RouterProvider";
 import { AboutModal } from "./AboutModal";
-import { LoadingProvider } from "../shared/lib/loading/LoadingProvider";
+import { LoadingProvider } from "@shared/lib/loading/LoadingProvider";
 import "./App.css";
 
 export const App: FC = () => {

@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import type { Middleware } from "@reduxjs/toolkit";
-import { postsApi } from "../../../entities/post/api/postsApi";
-import { commentsApi } from "../../../entities/comment/api/commentsApi";
-import { albumsApi } from "../../../entities/album/api/albumsApi";
-import { todosApi } from "../../../entities/todo/api/todosApi";
-import { usersApi } from "../../../entities/user/api/usersApi";
+import { postsApi } from "@entities/post/api/postsApi";
+import { commentsApi } from "@entities/comment/api/commentsApi";
+import { albumsApi } from "@entities/album/api/albumsApi";
+import { todosApi } from "@entities/todo/api/todosApi";
+import { usersApi } from "@entities/user/api/usersApi";
 import postSlice from "../../../entities/post/model/slice/postSlice";
 import userSlice from "../../../entities/user/model/slice/userSlice";
 

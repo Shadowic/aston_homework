@@ -27,6 +27,8 @@ export const LoadingProvider: FC<LoadingProviderProps> = ({
 
       return () => clearTimeout(timer);
     }
+
+    return undefined;
   }, [initialLoading]);
 
   const value = {

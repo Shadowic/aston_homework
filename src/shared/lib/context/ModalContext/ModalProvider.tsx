@@ -4,14 +4,14 @@ import { ModalContext } from "./ModalContext";
 import type { ModalProviderProps } from "./ModalContext";
 
 export const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-    return (
-        <ModalContext.Provider value={{ isModalOpen, openModal, closeModal }}>
-            {children}
-        </ModalContext.Provider>
-    );
+  return (
+    <ModalContext.Provider value={{ isModalOpen, openModal, closeModal }}>
+      {children}
+    </ModalContext.Provider>
+  );
 };

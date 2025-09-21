@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import type { FC } from "react";
 import { Button } from "../../../shared/ui/Button";
-import { LoadingSpinner } from "../../../shared/ui/LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "@shared/ui/LoadingSpinner/LoadingSpinner";
 import styles from "./CommentList.module.css";
 
 interface Comment {

@@ -1,5 +1,5 @@
 import type { FC, ComponentType } from "react";
-import { LoadingSpinner } from "../../ui/LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "@shared/ui/LoadingSpinner/LoadingSpinner";
 import styles from "./Loading.module.css";
 
 interface WithLoadingOptions {
@@ -28,7 +28,7 @@ export function withLoading<P extends object>(
     return <Component {...(props as P)} />;
   };
 
-  WithLoadingComponent.displayName = `WithLoading(${Component.displayName || Component.name})`;
+  WithLoadingComponent.displayName = `WithLoading`;
 
   return WithLoadingComponent;
 }

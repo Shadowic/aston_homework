@@ -1,12 +1,13 @@
 import type { FC } from "react";
 import { useParams } from "react-router-dom";
-import { useGetPostsByUserIdQuery } from "../../entities/post/api/postsApi";
-import { useGetUserByIdQuery } from "../../entities/user/api/usersApi";
-import { PostCard } from "../../entities/post/ui";
-import { CreatePostForm } from "../../entities/post/ui/CreatePostForm";
-import { DeletePostButton } from "../../entities/post/ui/DeletePostButton";
-import { UserTabs } from "../../widgets/UserTabs/UserTabs";
-import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
+import { useGetPostsByUserIdQuery } from "@entities/post/api/postsApi";
+import { useGetUserByIdQuery } from "@entities/user/api/usersApi";
+import { PostCard } from "@/entities/post/ui";
+import { CreatePostForm } from "@/entities/post/ui/CreatePostForm";
+import { DeletePostButton } from "@/entities/post/ui/DeletePostButton";
+import { UserTabs } from "@widgets/UserTabs/UserTabs";
+import { LoadingSpinner } from "@shared/ui/LoadingSpinner/LoadingSpinner";
+import { ItemList } from "@shared/ui/ItemList";
 import styles from "./UserPosts.module.css";
 
 export const UserPosts: FC = () => {
@@ -34,7 +35,7 @@ export const UserPosts: FC = () => {
   const error = userError || postsError;
 
   if (isLoading) return <LoadingSpinner />;
-  if (error) return <div>Error: {String(error)}</div>;
+  if (error) return <div>Error: {JSON.stringify(error)}</div>;
   if (!id) return <div>Пользователь не найден</div>;
   if (!user) return <div>Пользователь не найден</div>;
 
@@ -58,18 +59,18 @@ export const UserPosts: FC = () => {
         <CreatePostForm userId={userId} />
       </div>
 
-      <div className={styles.posts}>
-        {posts.length > 0 ? (
-          posts.map((post) => (
-            <div key={post.id}>
-              <PostCard post={post} />
-              <DeletePostButton postId={post.id} postTitle={post.title} />
-            </div>
-          ))
-        ) : (
-          <div>У пользователя нет постов</div>
-        )}
-      </div>
+        <ItemList
+            items={posts}
+            loading={false}
+            emptyMessage="У пользователя нет постов"
+            listClassName={styles.posts}
+            renderItem={(post) => (
+                <div>
+                    <PostCard post={post} />
+                    <DeletePostButton postId={post.id} postTitle={post.title} />
+                </div>
+            )}
+        />
     </div>
   );
 };

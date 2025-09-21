@@ -1,0 +1,44 @@
+.container {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  padding: 0;
+  margin: 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: #666;
+  font-style: italic;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: #888;
+  font-style: italic;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .list {
+    gap: 8px;
+  }
+
+  .loading,
+  .empty {
+    padding: 20px;
+  }
+}

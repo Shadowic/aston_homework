@@ -1,11 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export interface Todo {
-  id: number;
-  userId: number;
-  title: string;
-  completed: boolean;
-}
+import type { Todo } from "@entities/todo/model/types";
 
 export const todosApi = createApi({
   reducerPath: "todosApi",
@@ -35,8 +29,6 @@ export const todosApi = createApi({
   }),
 });
 
-export const {
-  useGetTodosQuery,
-  useGetTodosByUserIdQuery,
-  useGetTodoByIdQuery,
-} = todosApi;
+export const useGetTodosQuery = todosApi.useGetTodosQuery;
+export const useGetTodosByUserIdQuery = todosApi.useGetTodosByUserIdQuery;
+export const useGetTodoByIdQuery = todosApi.useGetTodoByIdQuery;

@@ -1,11 +1,12 @@
 import type { FC } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useGetAlbumsByUserIdQuery } from "../../entities/album/api/albumsApi";
-import { useGetPhotosByAlbumIdQuery } from "../../entities/album/api/albumsApi";
-import type { Album } from "../../entities/album/api/albumsApi";
-import { UserTabs } from "../../widgets/UserTabs/UserTabs";
-import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
+import { useGetAlbumsByUserIdQuery } from "@entities/album/api/albumsApi";
+import { useGetPhotosByAlbumIdQuery } from "@entities/album/api/albumsApi";
+import { UserTabs } from "@widgets/UserTabs/UserTabs";
+import { LoadingSpinner } from "@shared/ui/LoadingSpinner/LoadingSpinner";
+import { ItemList } from "@shared/ui/ItemList";
 import styles from "./UserAlbums.module.css";
+import type { Album } from "@entities/album/model/types";
 
 interface AlbumCardProps {
   album: Album;
@@ -67,7 +68,7 @@ export const UserAlbums: FC = () => {
     return (
       <div className={styles.userAlbums}>
         <h2 className={styles.title}>Альбомы пользователя #{id}</h2>
-        <div>Ошибка при загрузке альбомов</div>
+        <div>Ошибка при загрузке альбомов: {JSON.stringify(error)}</div>
       </div>
     );
   }
@@ -88,11 +89,15 @@ export const UserAlbums: FC = () => {
     <div className={`${styles.userAlbums} container`}>
       <UserTabs userId={userId} />
       <h2 className={styles.title}>Альбомы пользователя #{id}</h2>
-      <div className={styles.albumsGrid}>
-        {albums.map((album) => (
-          <AlbumCard key={album.id} album={album} userId={userId} />
-        ))}
-      </div>
+      <ItemList
+          items={albums}
+          loading={false}
+          emptyMessage="У пользователя нет альбомов"
+          listClassName={styles.albumsGrid}
+          renderItem={(album) => (
+              <AlbumCard key={album.id} album={album} userId={userId} />
+          )}
+      />
     </div>
   );
 };

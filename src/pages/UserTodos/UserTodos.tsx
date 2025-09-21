@@ -1,11 +1,38 @@
 import { useState } from "react";
 import type { FC } from "react";
 import { useParams } from "react-router-dom";
-import { useGetTodosByUserIdQuery } from "../../entities/todo/api/todosApi";
-import { Button } from "../../shared/ui/Button";
-import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
+import { useGetTodosByUserIdQuery } from "@entities/todo/api/todosApi";
+import { Button } from "@/shared/ui/Button";
+import { LoadingSpinner } from "@shared/ui/LoadingSpinner/LoadingSpinner";
+import { ItemList } from "@shared/ui/ItemList";
 import styles from "./UserTodos.module.css";
-import { UserTabs } from "../../widgets/UserTabs/UserTabs";
+import { UserTabs } from "@widgets/UserTabs/UserTabs";
+import type { Todo } from "@entities/todo/model/types";
+
+interface TodoItemProps {
+  todo: Todo;
+}
+
+const TodoItem: FC<TodoItemProps> = ({ todo }) => (
+    <div className={styles.todoCard}>
+      <input
+          type="checkbox"
+          checked={todo.completed}
+          className={styles.todoCheckbox}
+          readOnly
+      />
+      <div className={styles.todoContent}>
+        <div
+            className={`${styles.todoTitle} ${todo.completed ? styles.todoCompleted : ""}`}
+        >
+          {todo.title}
+        </div>
+        <span className={`${styles.todoStatus}`}>
+        {todo.completed ? "Выполнено" : "В процессе"}
+      </span>
+      </div>
+    </div>
+);
 
 export const UserTodos: FC = () => {
   const { id } = useParams();
@@ -20,7 +47,7 @@ export const UserTodos: FC = () => {
     skip: !userId,
   });
 
-  const filteredTodos = userTodos.filter((todo) => {
+  const filteredTodos = userTodos.filter((todo: Todo) => {
     if (filter === "completed") return todo.completed;
     if (filter === "active") return !todo.completed;
     return true;
@@ -41,7 +68,7 @@ export const UserTodos: FC = () => {
     return (
       <div className={`${styles.userTodos} container`}>
         <h2 className={styles.title}>Задачи пользователя #{id}</h2>
-        <div>Ошибка при загрузке задач</div>
+        <div>Ошибка при загрузке задач: {JSON.stringify(error)}</div>
       </div>
     );
   }
@@ -93,28 +120,12 @@ export const UserTodos: FC = () => {
         </Button>
       </div>
 
-      <div className={styles.todosList}>
-        {filteredTodos.map((todo) => (
-          <div key={todo.id} className={styles.todoCard}>
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              className={styles.todoCheckbox}
-              readOnly
-            />
-            <div className={styles.todoContent}>
-              <div
-                className={`${styles.todoTitle} ${todo.completed ? styles.todoCompleted : ""}`}
-              >
-                {todo.title}
-              </div>
-              <span className={`${styles.todoStatus}`}>
-                {todo.completed ? "Выполнено" : "В процессе"}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ItemList
+          items={filteredTodos}
+          emptyMessage={`Нет задач для фильтра "${filter === 'all' ? 'все' : filter === 'completed' ? 'выполненные' : 'активные'}"`}
+          listClassName={styles.todosList}
+          renderItem={(todo) => <TodoItem todo={todo} />}
+      />
     </div>
   );
 };
