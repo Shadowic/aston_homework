@@ -13,7 +13,7 @@ export const PostList: FC = () => {
 
   const filteredPosts = useMemo(() => {
     return filterByLength(mockPosts, sortDirection);
-  }, [mockPosts, sortDirection]);
+  }, [sortDirection]);
 
   const handleFilterChange = useCallback((direction: SortDirection) => {
     setSortDirection(direction);
