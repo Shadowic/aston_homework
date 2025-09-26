@@ -6,4 +6,6 @@ export interface LoadingContextType {
   stopLoading: () => void;
 }
 
-export const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
+export const LoadingContext = createContext<LoadingContextType | undefined>(
+  undefined,
+);

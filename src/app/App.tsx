@@ -7,16 +7,16 @@ import { LoadingProvider } from "../shared/lib/loading/LoadingProvider";
 import "./App.css";
 
 export const App: FC = () => {
-    return (
-        <StoreProvider>
-            <LoadingProvider initialLoading={true}>
-                <ModalProvider>
-                    <RouterProvider />
-                    <AboutModal />
-                </ModalProvider>
-            </LoadingProvider>
-        </StoreProvider>
-    );
+  return (
+    <StoreProvider>
+      <LoadingProvider initialLoading={true}>
+        <ModalProvider>
+          <RouterProvider />
+          <AboutModal />
+        </ModalProvider>
+      </LoadingProvider>
+    </StoreProvider>
+  );
 };
 
 export default App;

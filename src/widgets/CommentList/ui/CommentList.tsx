@@ -21,13 +21,13 @@ interface CommentListProps {
 }
 
 export const CommentList: FC<CommentListProps> = ({
-                                                    comments,
-                                                    initialVisible = 3,
-                                                    showToggleButton = true,
-                                                    defaultVisible = false,
-                                                    isLoading = false,
-                                                    postId,
-                                                  }) => {
+  comments,
+  initialVisible = 3,
+  showToggleButton = true,
+  defaultVisible = false,
+  isLoading = false,
+  postId,
+}) => {
   const [isVisible, setIsVisible] = useState(defaultVisible);
   const [showAll, setShowAll] = useState(false);
   const [visibleCount, setVisibleCount] = useState(initialVisible);
@@ -60,84 +60,84 @@ export const CommentList: FC<CommentListProps> = ({
 
   if (isLoading) {
     return (
-        <div className={styles.commentList}>
-          <LoadingSpinner />
-        </div>
+      <div className={styles.commentList}>
+        <LoadingSpinner />
+      </div>
     );
   }
 
   return (
-      <div className={styles.commentList}>
-        {showToggleButton && (
-            <Button
-                variant="Outline"
-                size="Small"
-                onClick={toggleVisibility}
-                className={styles.toggleBtn}
-            >
-              {isVisible ? "Скрыть комментарии" : "Показать комментарии"}(
-              {comments.length})
-            </Button>
-        )}
+    <div className={styles.commentList}>
+      {showToggleButton && (
+        <Button
+          variant="Outline"
+          size="Small"
+          onClick={toggleVisibility}
+          className={styles.toggleBtn}
+        >
+          {isVisible ? "Скрыть комментарии" : "Показать комментарии"}(
+          {comments.length})
+        </Button>
+      )}
 
-        {isVisible && (
+      {isVisible && (
+        <>
+          {hasComments ? (
             <>
-              {hasComments ? (
+              <div className={styles.comments}>
+                {visibleComments.map((comment) => (
+                  <div
+                    key={`${postId}-${comment.id}`}
+                    className={styles.comment}
+                  >
+                    <div className={styles.commentHeader}>
+                      <span className={styles.author}>{comment.author}</span>
+                      <span className={styles.date}>{comment.date}</span>
+                    </div>
+                    <p className={styles.text}>{comment.text}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className={styles.controls}>
+                {hasMoreComments && !showAll && (
                   <>
-                    <div className={styles.comments}>
-                      {visibleComments.map((comment) => (
-                          <div
-                              key={`${postId}-${comment.id}`}
-                              className={styles.comment}
-                          >
-                            <div className={styles.commentHeader}>
-                              <span className={styles.author}>{comment.author}</span>
-                              <span className={styles.date}>{comment.date}</span>
-                            </div>
-                            <p className={styles.text}>{comment.text}</p>
-                          </div>
-                      ))}
-                    </div>
-
-                    <div className={styles.controls}>
-                      {hasMoreComments && !showAll && (
-                          <>
-                            <Button
-                                variant="Outline"
-                                size="Small"
-                                onClick={handleShowMore}
-                                className={styles.showMoreBtn}
-                            >
-                              Показать еще
-                            </Button>
-                            <Button
-                                variant="Primary"
-                                size="Small"
-                                onClick={handleShowAll}
-                                className={styles.showAllBtn}
-                            >
-                              Показать все
-                            </Button>
-                          </>
-                      )}
-
-                      {canCollapse && (
-                          <Button
-                              variant="Secondary"
-                              size="Small"
-                              onClick={handleCollapse}
-                              className={styles.collapseBtn}
-                          >
-                            Свернуть
-                          </Button>
-                      )}
-                    </div>
+                    <Button
+                      variant="Outline"
+                      size="Small"
+                      onClick={handleShowMore}
+                      className={styles.showMoreBtn}
+                    >
+                      Показать еще
+                    </Button>
+                    <Button
+                      variant="Primary"
+                      size="Small"
+                      onClick={handleShowAll}
+                      className={styles.showAllBtn}
+                    >
+                      Показать все
+                    </Button>
                   </>
-              ) : (
-                  <div className={styles.empty}>Комментариев пока нет</div>
-              )}
+                )}
+
+                {canCollapse && (
+                  <Button
+                    variant="Secondary"
+                    size="Small"
+                    onClick={handleCollapse}
+                    className={styles.collapseBtn}
+                  >
+                    Свернуть
+                  </Button>
+                )}
+              </div>
             </>
-        )}
-      </div>
+          ) : (
+            <div className={styles.empty}>Комментариев пока нет</div>
+          )}
+        </>
+      )}
+    </div>
   );
 };

@@ -11,29 +11,29 @@ import { UserList } from "../../../pages/UserList/UserList";
 import { LoadingSpinner } from "../../../shared/ui/LoadingSpinner/LoadingSpinner";
 
 export const RouterProvider = () => {
-    return (
-        <BrowserRouter>
-            <Suspense fallback={<LoadingSpinner />}>
-                <Routes>
-                    <Route path="/" element={<MainLayout />}>
-                        <Route index element={<PostList />} />
-                        <Route path="posts" element={<PostList />} />
-                        <Route path="posts/:id" element={<PostDetails />} />
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<PostList />} />
+            <Route path="posts" element={<PostList />} />
+            <Route path="posts/:id" element={<PostDetails />} />
 
-                        <Route path="users">
-                            <Route index element={<UserList />} />
-                            <Route path=":id">
-                                <Route path="posts" element={<UserPosts />} />
-                                <Route path="albums" element={<UserAlbums />} />
-                                <Route path="todos" element={<UserTodos />} />
-                                <Route path="albums/:albumId">
-                                    <Route path="photos" element={<AlbumPhotos />} />
-                                </Route>
-                            </Route>
-                        </Route>
-                    </Route>
-                </Routes>
-            </Suspense>
-        </BrowserRouter>
-    );
+            <Route path="users">
+              <Route index element={<UserList />} />
+              <Route path=":id">
+                <Route path="posts" element={<UserPosts />} />
+                <Route path="albums" element={<UserAlbums />} />
+                <Route path="todos" element={<UserTodos />} />
+                <Route path="albums/:albumId">
+                  <Route path="photos" element={<AlbumPhotos />} />
+                </Route>
+              </Route>
+            </Route>
+          </Route>
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
 };
