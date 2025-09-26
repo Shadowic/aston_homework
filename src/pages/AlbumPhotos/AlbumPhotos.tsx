@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useParams } from "react-router-dom";
 import { UserTabs } from "../../widgets/UserTabs/UserTabs";
 import { useGetPhotosByAlbumIdQuery } from "../../entities/album/api/albumsApi";

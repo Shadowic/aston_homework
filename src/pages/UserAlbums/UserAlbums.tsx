@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGetAlbumsByUserIdQuery } from "../../entities/album/api/albumsApi";
 import { useGetPhotosByAlbumIdQuery } from "../../entities/album/api/albumsApi";

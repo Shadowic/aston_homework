@@ -9,7 +9,6 @@ export interface Post {
 }
 
 const postsAdapter = createEntityAdapter<Post>({
-  selectId: (post) => post.id,
   sortComparer: (a, b) => a.id - b.id,
 });
 

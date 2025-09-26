@@ -1,4 +1,5 @@
-import { useState, useEffect, FC, ReactNode } from "react";
+import { useState, useEffect } from "react";
+import type { FC, ReactNode } from "react";
 import { ThemeContext } from "./ThemeContext";
 import type { Theme } from "./ThemeContext";
 

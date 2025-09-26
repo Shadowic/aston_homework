@@ -30,7 +30,7 @@ export const todosApi = createApi({
     }),
     getTodoById: builder.query<Todo, number>({
       query: (id) => `todos/${id}`,
-      providesTags: (result, error, id) => [{ type: "Todo", id }],
+      providesTags: (_result, _error, id) => [{ type: "Todo", id }],
     }),
   }),
 });

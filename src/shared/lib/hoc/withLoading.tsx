@@ -1,23 +1,34 @@
-import { FC } from "react";
+import type { FC, ComponentType } from "react";
 import { LoadingSpinner } from "../../ui/LoadingSpinner/LoadingSpinner";
 import styles from "./Loading.module.css";
 
-export const withLoading = (Component: FC) => {
-    const WithLoading: FC<{ isLoading?: boolean }> = ({
-                                                          isLoading,
-                                                          ...props
-                                                      }) => {
+interface WithLoadingOptions {
+    message?: string;
+}
+
+export function withLoading<P extends object>(
+    Component: ComponentType<P>,
+    options: WithLoadingOptions = {}
+): FC<P & { isLoading?: boolean }> {
+    const { message = "Загрузка..." } = options;
+
+    const WithLoadingComponent: FC<P & { isLoading?: boolean }> = ({
+           isLoading,
+           ...props
+       }) => {
         if (isLoading) {
             return (
                 <div className={styles.container}>
                     <LoadingSpinner />
-                    <p>Загрузка...</p>
+                    <p>{message}</p>
                 </div>
             );
         }
 
-        return <Component {...props} />;
+        return <Component {...(props as P)} />;
     };
 
-    return WithLoading;
-};
+    WithLoadingComponent.displayName = `WithLoading(${Component.displayName || Component.name})`;
+
+    return WithLoadingComponent;
+}

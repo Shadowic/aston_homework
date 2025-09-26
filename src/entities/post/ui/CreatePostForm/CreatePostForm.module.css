@@ -73,13 +73,11 @@
 
 .button:hover:not(:disabled) {
   background: var(--primary-hover);
-  transform: translateY(-1px);
 }
 
 .button:disabled {
   background: var(--secondary-color);
   cursor: not-allowed;
-  transform: none;
 }
 
 @media (max-width: 768px) {

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useGetCommentsByPostIdQuery } from "../../../../entities/comment/api/commentsApi";
 import { CommentList } from "../../../../widgets/CommentList/ui/CommentList";
 import styles from "./PostCard.module.css";

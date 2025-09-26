@@ -23,7 +23,7 @@ export const postsApi = createApi({
     }),
     getPostById: builder.query<Post, number>({
       query: (id) => `posts/${id}`,
-      providesTags: (result, error, id) => [{ type: "Post", id }],
+      providesTags: (_result, _error, id) => [{ type: "Post", id }],
     }),
     getPostsByUserId: builder.query<Post[], number>({
       query: (userId) => `posts?userId=${userId}`,
@@ -46,7 +46,7 @@ export const postsApi = createApi({
         method: "PUT",
         body: updates,
       }),
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: (_result, _error, { id }) => [
         { type: "Post", id },
         { type: "Post", id: "LIST" },
       ],
@@ -56,7 +56,7 @@ export const postsApi = createApi({
         url: `posts/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: "Post", id },
         { type: "Post", id: "LIST" },
       ],

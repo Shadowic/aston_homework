@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import { useCreatePostMutation } from "../../api/postsApi";
 import styles from "./CreatePostForm.module.css";
 

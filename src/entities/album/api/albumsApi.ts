@@ -24,36 +24,36 @@ export const albumsApi = createApi({
     getAlbums: build.query<Album[], void>({
       query: () => "albums",
       providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Album" as const, id })),
-              { type: "Album", id: "LIST" },
-            ]
-          : [{ type: "Album", id: "LIST" }],
+          result
+              ? [
+                ...result.map(({ id }) => ({ type: "Album" as const, id })),
+                { type: "Album", id: "LIST" },
+              ]
+              : [{ type: "Album", id: "LIST" }],
     }),
     getAlbumsByUserId: build.query<Album[], number>({
       query: (userId) => `albums?userId=${userId}`,
       providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Album" as const, id })),
-              { type: "Album", id: "LIST" },
-            ]
-          : [{ type: "Album", id: "LIST" }],
+          result
+              ? [
+                ...result.map(({ id }) => ({ type: "Album" as const, id })),
+                { type: "Album", id: "LIST" },
+              ]
+              : [{ type: "Album", id: "LIST" }],
     }),
     getAlbumById: build.query<Album, number>({
       query: (id) => `albums/${id}`,
-      providesTags: (result, error, id) => [{ type: "Album", id }],
+      providesTags: (_result, _error, id) => [{ type: "Album", id }],
     }),
     getPhotosByAlbumId: build.query<Photo[], number>({
       query: (albumId) => `albums/${albumId}/photos`,
       providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Photo" as const, id })),
-              { type: "Photo", id: "LIST" },
-            ]
-          : [{ type: "Photo", id: "LIST" }],
+          result
+              ? [
+                ...result.map(({ id }) => ({ type: "Photo" as const, id })),
+                { type: "Photo", id: "LIST" },
+              ]
+              : [{ type: "Photo", id: "LIST" }],
     }),
     createAlbum: build.mutation<Album, Partial<Album>>({
       query: (newAlbum) => ({
@@ -68,7 +68,7 @@ export const albumsApi = createApi({
         url: `albums/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: "Album", id },
         { type: "Album", id: "LIST" },
       ],

@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, FC, ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
+import type { FC, ReactNode } from "react";
 
 interface ModalContextType {
   isModalOpen: boolean;

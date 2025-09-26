@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useGetPostsByUserIdQuery } from "../../entities/post/api/postsApi";
 import { useGetUserByIdQuery } from "../../entities/user/api/usersApi";

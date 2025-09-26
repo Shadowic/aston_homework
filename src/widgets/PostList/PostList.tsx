@@ -1,4 +1,5 @@
-import { FC, Fragment, useState, useMemo, useCallback } from "react";
+import { Fragment, useState, useMemo, useCallback } from "react";
+import type { FC } from "react";
 import { PostCard } from "../../entities/post/ui";
 import { mockPosts } from "../../shared/mocks/posts";
 import { PostLengthFilter } from "../../features/PostLengthFilter/ui/PostLengthFilter";

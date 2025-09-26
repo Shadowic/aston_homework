@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useModal } from "../shared/lib/context/ModalContext";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "../shared/ui/Modal";
 

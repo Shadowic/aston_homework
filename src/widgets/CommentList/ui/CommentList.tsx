@@ -1,4 +1,5 @@
-import { FC, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
+import type { FC } from "react";
 import { Button } from "../../../shared/ui/Button";
 import { LoadingSpinner } from "../../../shared/ui/LoadingSpinner/LoadingSpinner";
 import styles from "./CommentList.module.css";
@@ -60,7 +61,7 @@ export const CommentList: FC<CommentListProps> = ({
   if (isLoading) {
     return (
         <div className={styles.commentList}>
-          <LoadingSpinner size="small" />
+          <LoadingSpinner />
         </div>
     );
   }

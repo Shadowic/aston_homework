@@ -1,4 +1,5 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
+import type { FC } from "react";
 import { Link } from "react-router-dom";
 import { useGetUsersQuery } from "../../entities/user/api/usersApi";
 import { useDispatch } from "react-redux";

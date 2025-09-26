@@ -19,7 +19,6 @@ export interface User {
 }
 
 const usersAdapter = createEntityAdapter<User>({
-  selectId: (user) => user.id,
   sortComparer: (a, b) => a.id - b.id,
 });
 

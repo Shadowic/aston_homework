@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useDeletePostMutation } from "../../api/postsApi";
 import styles from "./DeletePostButton.module.css";
 

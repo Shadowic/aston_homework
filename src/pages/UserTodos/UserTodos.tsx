@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useGetTodosByUserIdQuery } from "../../entities/todo/api/todosApi";
 import { Button } from "../../shared/ui/Button";
