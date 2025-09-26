@@ -31,11 +31,11 @@ export const AlbumPhotos: FC = () => {
   const error = albumError || photosError;
 
   if (isLoading) return <LoadingSpinner />;
-  if (error) return <div>Error: {(error as any).toString()}</div>;
+  if (error) return <div>Error: {String(error)}</div>;
   if (!id || !albumId) return <div>User or album not found</div>;
 
   return (
-    <div className={`${styles.userPhotos} container`}>
+    <div className={`container`}>
       <UserTabs userId={userId} />
       <h2>Фотографии альбома: {album?.title || `#${albumId}`}</h2>
 

@@ -21,7 +21,7 @@ export const usePosts = (userId?: number) => {
       }
 
       setPosts(filteredPosts);
-    } catch (err) {
+    } catch {
       setError("Failed to fetch posts");
     } finally {
       setLoading(false);

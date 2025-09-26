@@ -2,12 +2,13 @@ import type { FC } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGetAlbumsByUserIdQuery } from "../../entities/album/api/albumsApi";
 import { useGetPhotosByAlbumIdQuery } from "../../entities/album/api/albumsApi";
+import type { Album } from "../../entities/album/api/albumsApi";
 import { UserTabs } from "../../widgets/UserTabs/UserTabs";
 import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
 import styles from "./UserAlbums.module.css";
 
 interface AlbumCardProps {
-  album: any;
+  album: Album;
   userId: number;
 }
 

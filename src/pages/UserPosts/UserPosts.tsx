@@ -34,7 +34,7 @@ export const UserPosts: FC = () => {
   const error = userError || postsError;
 
   if (isLoading) return <LoadingSpinner />;
-  if (error) return <div>Error: {(error as any).toString()}</div>;
+  if (error) return <div>Error: {String(error)}</div>;
   if (!id) return <div>Пользователь не найден</div>;
   if (!user) return <div>Пользователь не найден</div>;
 
