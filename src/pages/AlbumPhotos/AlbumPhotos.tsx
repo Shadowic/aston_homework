@@ -4,7 +4,7 @@ import { UserTabs } from "../../widgets/UserTabs/UserTabs";
 import { useGetPhotosByAlbumIdQuery } from "../../entities/album/api/albumsApi";
 import { useGetAlbumByIdQuery } from "../../entities/album/api/albumsApi";
 import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
-import styles from "./albumPhotos.module.css";
+import styles from "./AlbumPhotos.module.css";
 
 export const AlbumPhotos: FC = () => {
   const { id, albumId } = useParams();
