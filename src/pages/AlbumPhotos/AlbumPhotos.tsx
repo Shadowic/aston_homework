@@ -5,7 +5,7 @@ import { useGetPhotosByAlbumIdQuery } from "@entities/album/api/albumsApi";
 import { useGetAlbumByIdQuery } from "@entities/album/api/albumsApi";
 import { LoadingSpinner } from "@shared/ui/LoadingSpinner/LoadingSpinner";
 import { ItemList } from "@shared/ui/ItemList";
-import styles from "./albumPhotos.module.css";
+import styles from "./AlbumPhotos.module.css";
 import type { Photo } from "@entities/album/model/types";
 
 interface PhotoItemProps {
