@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useTheme } from "../../../shared/lib/theme";
 import { Button } from "../../../shared/ui/Button";
 import styles from "./ThemeSwitcher.module.css";

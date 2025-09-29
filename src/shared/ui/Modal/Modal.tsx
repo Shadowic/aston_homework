@@ -1,4 +1,5 @@
-import { FC, ReactNode, useEffect, useCallback, MouseEvent } from "react";
+import { useEffect, useCallback } from "react";
+import type { FC, ReactNode, MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "../../../shared/ui/Button";
 import styles from "./Modal.module.css";

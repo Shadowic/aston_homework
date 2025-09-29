@@ -1,28 +1,74 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useParams } from "react-router-dom";
-import { usePosts } from "../../features/PostList/model/hooks/usePosts";
-import { PostCard } from "../../entities/post/ui/PostCard";
+import { useGetPostsByUserIdQuery } from "../../entities/post/api/postsApi";
+import { useGetUserByIdQuery } from "../../entities/user/api/usersApi";
+import { PostCard } from "../../entities/post/ui";
+import { CreatePostForm } from "../../entities/post/ui/CreatePostForm";
+import { DeletePostButton } from "../../entities/post/ui/DeletePostButton";
 import { UserTabs } from "../../widgets/UserTabs/UserTabs";
 import { LoadingSpinner } from "../../shared/ui/LoadingSpinner/LoadingSpinner";
 import styles from "./UserPosts.module.css";
 
 export const UserPosts: FC = () => {
   const { id } = useParams();
-  const { posts, loading, error } = usePosts(id ? Number(id) : undefined);
+  const userId = id ? Number(id) : 0;
 
-  if (loading) return <LoadingSpinner />;
-  if (error) return <div>Error: {error}</div>;
-  if (!id) return <div>User not found</div>;
+  const {
+    data: user,
+    isLoading: userLoading,
+    error: userError,
+  } = useGetUserByIdQuery(userId, {
+    skip: !userId,
+  });
+
+  const {
+    data: posts = [],
+    isLoading: postsLoading,
+    error: postsError,
+    isFetching,
+  } = useGetPostsByUserIdQuery(userId, {
+    skip: !userId,
+  });
+
+  const isLoading = userLoading || postsLoading;
+  const error = userError || postsError;
+
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <div>Error: {String(error)}</div>;
+  if (!id) return <div>Пользователь не найден</div>;
+  if (!user) return <div>Пользователь не найден</div>;
 
   return (
     <div className={`${styles.userPosts} container`}>
-      <UserTabs userId={Number(id)} />
+      <UserTabs userId={userId} />
 
-      <h2 className={styles.title}>Посты пользователя #{id}</h2>
+      <h2 className={styles.title}>
+        Посты пользователя: {user.name} (@{user.username})
+      </h2>
+
+      {isFetching && <div>Обновление данных...</div>}
+
+      <div>
+        <p>Найдено постов: {posts.length}</p>
+        <p>Email: {user.email}</p>
+      </div>
+
+      <div>
+        <h3>Создать новый пост</h3>
+        <CreatePostForm userId={userId} />
+      </div>
+
       <div className={styles.posts}>
-        {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <div key={post.id}>
+              <PostCard post={post} />
+              <DeletePostButton postId={post.id} postTitle={post.title} />
+            </div>
+          ))
+        ) : (
+          <div>У пользователя нет постов</div>
+        )}
       </div>
     </div>
   );

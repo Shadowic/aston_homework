@@ -1,5 +1,6 @@
-import { FC, Fragment, useState, useMemo, useCallback } from "react";
-import { PostCard } from "../../entities/post/ui/PostCard";
+import { Fragment, useState, useMemo, useCallback } from "react";
+import type { FC } from "react";
+import { PostCard } from "../../entities/post/ui";
 import { mockPosts } from "../../shared/mocks/posts";
 import { PostLengthFilter } from "../../features/PostLengthFilter/ui/PostLengthFilter";
 import { filterByLength } from "../../features/PostLengthFilter/lib/filterByLength";
@@ -12,7 +13,7 @@ export const PostList: FC = () => {
 
   const filteredPosts = useMemo(() => {
     return filterByLength(mockPosts, sortDirection);
-  }, [mockPosts, sortDirection]);
+  }, [sortDirection]);
 
   const handleFilterChange = useCallback((direction: SortDirection) => {
     setSortDirection(direction);
