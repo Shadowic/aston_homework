@@ -1,16 +1,53 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import { useParams } from "react-router-dom";
-import { mockTodos } from "../../shared/mocks/todos";
-import { Button } from "../../shared/ui/Button";
+import { useGetTodosByUserIdQuery } from "@entities/todo/api/todosApi";
+import { Button } from "@/shared/ui/Button";
+import { LoadingSpinner } from "@shared/ui/LoadingSpinner/LoadingSpinner";
+import { ItemList } from "@shared/ui/ItemList";
 import styles from "./UserTodos.module.css";
-import { UserTabs } from "../../widgets/UserTabs/UserTabs";
+import { UserTabs } from "@widgets/UserTabs/UserTabs";
+import type { Todo } from "@entities/todo/model/types";
+
+interface TodoItemProps {
+  todo: Todo;
+}
+
+const TodoItem: FC<TodoItemProps> = ({ todo }) => (
+    <div className={styles.todoCard}>
+      <input
+          type="checkbox"
+          checked={todo.completed}
+          className={styles.todoCheckbox}
+          readOnly
+      />
+      <div className={styles.todoContent}>
+        <div
+            className={`${styles.todoTitle} ${todo.completed ? styles.todoCompleted : ""}`}
+        >
+          {todo.title}
+        </div>
+        <span className={`${styles.todoStatus}`}>
+        {todo.completed ? "Выполнено" : "В процессе"}
+      </span>
+      </div>
+    </div>
+);
 
 export const UserTodos: FC = () => {
   const { id } = useParams();
   const [filter, setFilter] = useState<"all" | "completed" | "active">("all");
+  const userId = id ? Number(id) : 0;
 
-  const userTodos = mockTodos.filter((todo) => todo.userId === Number(id));
-  const filteredTodos = userTodos.filter((todo) => {
+  const {
+    data: userTodos = [],
+    isLoading,
+    error,
+  } = useGetTodosByUserIdQuery(userId, {
+    skip: !userId,
+  });
+
+  const filteredTodos = userTodos.filter((todo: Todo) => {
     if (filter === "completed") return todo.completed;
     if (filter === "active") return !todo.completed;
     return true;
@@ -19,9 +56,26 @@ export const UserTodos: FC = () => {
   const completedCount = userTodos.filter((todo) => todo.completed).length;
   const activeCount = userTodos.filter((todo) => !todo.completed).length;
 
+  if (isLoading) {
+    return (
+      <div className={`${styles.userTodos} container`}>
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={`${styles.userTodos} container`}>
+        <h2 className={styles.title}>Задачи пользователя #{id}</h2>
+        <div>Ошибка при загрузке задач: {JSON.stringify(error)}</div>
+      </div>
+    );
+  }
+
   return (
     <div className={`${styles.userTodos} container`}>
-      <UserTabs userId={Number(id)} />
+      <UserTabs userId={userId} />
       <h2 className={styles.title}>Задачи пользователя #{id}</h2>
 
       <div className={styles.stats}>
@@ -66,30 +120,12 @@ export const UserTodos: FC = () => {
         </Button>
       </div>
 
-      <div className={styles.todosList}>
-        {filteredTodos.map((todo) => (
-          <div key={todo.id} className={styles.todoCard}>
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              className={styles.todoCheckbox}
-              readOnly
-            />
-            <div className={styles.todoContent}>
-              <div
-                className={`${styles.todoTitle} ${todo.completed ? styles.todoCompleted : ""}`}
-              >
-                {todo.title}
-              </div>
-              <span
-                className={`${styles.todoStatus} ${todo.completed ? styles.statusCompleted : styles.statusPending}`}
-              >
-                {todo.completed ? "Выполнено" : "В процессе"}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ItemList
+          items={filteredTodos}
+          emptyMessage={`Нет задач для фильтра "${filter === 'all' ? 'все' : filter === 'completed' ? 'выполненные' : 'активные'}"`}
+          listClassName={styles.todosList}
+          renderItem={(todo) => <TodoItem todo={todo} />}
+      />
     </div>
   );
 };

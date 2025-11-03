@@ -1,9 +1,4 @@
-export interface Post {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-}
+import type { Post } from "@/entities/post/model/types";
 
 export type SortDirection = "asc" | "desc";
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { mockPosts } from "../../../../shared/mocks/posts";
+import { mockPosts } from "@shared/mocks/posts";
 
 export const usePosts = (userId?: number) => {
   const [posts, setPosts] = useState(mockPosts);
@@ -11,7 +11,6 @@ export const usePosts = (userId?: number) => {
       setLoading(true);
       setError(null);
 
-      // Имитация API запроса
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       let filteredPosts = mockPosts;
@@ -22,7 +21,7 @@ export const usePosts = (userId?: number) => {
       }
 
       setPosts(filteredPosts);
-    } catch (err) {
+    } catch {
       setError("Failed to fetch posts");
     } finally {
       setLoading(false);

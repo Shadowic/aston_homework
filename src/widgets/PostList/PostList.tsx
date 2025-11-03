@@ -1,8 +1,10 @@
-import { FC, Fragment, useState, useMemo, useCallback } from "react";
-import { PostCard } from "../../entities/post/ui/PostCard";
-import { mockPosts } from "../../shared/mocks/posts";
-import { PostLengthFilter } from "../../features/PostLengthFilter/ui/PostLengthFilter";
-import { filterByLength } from "../../features/PostLengthFilter/lib/filterByLength";
+import { useState, useMemo, useCallback } from "react";
+import type { FC } from "react";
+import { PostCard } from "../../entities/post/ui";
+import { mockPosts } from "@shared/mocks/posts";
+import { PostLengthFilter } from "@/features/PostLengthFilter/ui/PostLengthFilter";
+import { filterByLength } from "@/features/PostLengthFilter/lib/filterByLength";
+import { ItemList } from "@shared/ui/ItemList";
 import styles from "./PostList.module.css";
 
 type SortDirection = "asc" | "desc";
@@ -12,28 +14,27 @@ export const PostList: FC = () => {
 
   const filteredPosts = useMemo(() => {
     return filterByLength(mockPosts, sortDirection);
-  }, [mockPosts, sortDirection]);
+  }, [sortDirection]);
 
   const handleFilterChange = useCallback((direction: SortDirection) => {
     setSortDirection(direction);
   }, []);
 
   return (
-    <Fragment>
       <div className="container">
         <h2 className={styles.title}>Список постов</h2>
 
         <PostLengthFilter
-          onFilterChange={handleFilterChange}
-          currentDirection={sortDirection}
+            onFilterChange={handleFilterChange}
+            currentDirection={sortDirection}
         />
 
-        <div className={styles.posts}>
-          {filteredPosts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
+        <ItemList
+            items={filteredPosts}
+            emptyMessage="Посты не найдены"
+            listClassName={styles.posts}
+            renderItem={(post) => <PostCard key={post.id} post={post} />}
+        />
       </div>
-    </Fragment>
   );
 };

@@ -1,10 +1,9 @@
-import { FC, ReactNode } from "react";
-import styles from "./Modal.module.css";
+import type { FC, ReactNode } from "react";
 
 interface ModalFooterProps {
   children: ReactNode;
 }
 
 export const ModalFooter: FC<ModalFooterProps> = ({ children }) => {
-  return <footer className={styles.modalFooter}>{children}</footer>;
+  return <footer>{children}</footer>;
 };

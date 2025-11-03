@@ -1,6 +1,7 @@
-import { FC, useCallback } from 'react';
+import { useCallback } from "react";
+import type { FC } from "react";
 import { Button } from "../../../shared/ui/Button";
-import styles from './PostLengthFilter.module.css';
+import styles from "./PostLengthFilter.module.css";
 
 export type SortDirection = "asc" | "desc";
 
@@ -10,12 +11,16 @@ interface PostLengthFilterProps {
 }
 
 export const PostLengthFilter: FC<PostLengthFilterProps> = ({
-        onFilterChange,
-        currentDirection
-    }) => {
-    const handleDirectionChange = useCallback((direction: SortDirection) => {
-        onFilterChange(direction);
-    }, [onFilterChange]);
+  onFilterChange,
+  currentDirection,
+}) => {
+  const handleDirectionChange = useCallback(
+    (direction: SortDirection) => {
+      onFilterChange(direction);
+    },
+    [onFilterChange],
+  );
+
   return (
     <div className={styles.filter}>
       <label className={styles.label}>Сортировка по длине заголовка:</label>

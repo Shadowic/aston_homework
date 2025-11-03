@@ -42,7 +42,6 @@
   z-index: 10;
 }
 
-/* Анимации */
 @keyframes fadeIn {
   from {
     opacity: 0;

@@ -1,12 +1,20 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { useModal } from "../shared/lib/context/ModalContext";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "../shared/ui/Modal";
 
-export const AboutModal: FC = () => {
+interface AboutModalProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export const AboutModal: FC<AboutModalProps> = ({ isOpen, onClose }) => {
   const { isModalOpen, closeModal } = useModal();
 
+  const modalIsOpen = isOpen !== undefined ? isOpen : isModalOpen;
+  const handleClose = onClose || closeModal;
+
   return (
-    <Modal isOpen={isModalOpen} onClose={closeModal}>
+    <Modal isOpen={modalIsOpen} onClose={handleClose}>
       <ModalHeader>
         <h2>Хедер модала</h2>
       </ModalHeader>

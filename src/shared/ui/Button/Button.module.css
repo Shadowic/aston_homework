@@ -14,7 +14,6 @@
   outline: none;
 }
 
-/* Варианты кнопок */
 .btnPrimary {
   background-color: var(--primary-color, #646cff);
   color: white;
@@ -48,7 +47,6 @@
   color: white;
 }
 
-/* Размеры кнопок */
 .btnSmall {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -64,7 +62,6 @@
   font-size: 1.125rem;
 }
 
-/* Состояния */
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -76,7 +73,6 @@
   outline-offset: 2px;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
   .btn {
     padding: 0.6rem 1.2rem;

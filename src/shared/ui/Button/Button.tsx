@@ -1,10 +1,13 @@
-import { FC, ButtonHTMLAttributes, ReactNode } from "react";
+import type { FC, ReactNode, ButtonHTMLAttributes } from "react";
 import styles from "./Button.module.css";
+
+type ButtonVariant = "Primary" | "Secondary" | "Outline";
+type ButtonSize = "Small" | "Medium" | "Large";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: "Primary" | "Secondary" | "Outline";
-  size?: "Small" | "Medium" | "Large";
+  variant?: ButtonVariant;
+  size?: ButtonSize;
 }
 
 export const Button: FC<ButtonProps> = ({
